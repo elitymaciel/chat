@@ -65,8 +65,7 @@ services:
             - laravel
 
     supervisor:
-        build: .
-        container_name: w3c-supervisor
+        build: . 
         ports:
         - "8888:8080"
         volumes:
