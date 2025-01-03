@@ -26,10 +26,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
-RUN openssl req -x509 -newkey rsa:2048 -nodes -keyout ssl.key -out ssl.crt -days 365 \
--subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=chatest.duckdns.org"
-
+    chown -R $user:$user /home/$user 
+    
 # Install redis
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
