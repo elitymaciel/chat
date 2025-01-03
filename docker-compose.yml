@@ -64,6 +64,18 @@ services:
         networks:
             - laravel
 
+    supervisor:
+        build:
+        context: .
+        dockerfile: supervisord.Dockerfile
+        container_name: w3c-supervisor
+        ports:
+        - "8888:8080"
+        volumes:
+        - ./src:/var/www/html
+        - .docker/supervisord.conf:/etc/supervisor/supervisord.conf
+        networks:
+          - laravel
 networks:
     laravel:
         driver: bridge
