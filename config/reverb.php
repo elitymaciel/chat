@@ -27,13 +27,16 @@ return [
     */
 
     'servers' => [
-
         'reverb' => [
             'host' => env('REVERB_SERVER_HOST', '0.0.0.0'),
             'port' => env('REVERB_SERVER_PORT', 8080),
             'hostname' => env('REVERB_HOST'),
             'options' => [
-                'tls' => [],
+                'tls' => [
+                    'verify_peer' => false,
+                    'local_cert' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_CERT', null),
+                    'local_pk' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_PK', null),
+                ],
             ],
             'max_request_size' => env('REVERB_MAX_REQUEST_SIZE', 10_000),
             'scaling' => [
@@ -53,6 +56,7 @@ return [
         ],
 
     ],
+
 
     /*
     |--------------------------------------------------------------------------
