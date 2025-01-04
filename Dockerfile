@@ -12,11 +12,17 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    # Adiciona as dependências para o Node.js
+    lsb-release \
+    gnupg2 \
+    ca-certificates \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g pm2 # Instala o pm2 globalmente
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN npm install -g pm2
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
@@ -27,8 +33,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user 
-    
+    chown -R $user:$user /home/$user
+
 # Install redis
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
