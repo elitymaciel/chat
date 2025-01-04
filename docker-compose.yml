@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
     # image project
@@ -10,6 +10,7 @@ services:
         working_dir: /var/www/
         volumes:
             - ./:/var/www
+        command: pm2-runtime pm2.config.json
         depends_on:
             - redis
         networks:
@@ -65,16 +66,7 @@ services:
         image: redis:latest
         networks:
             - laravel
-
-    supervisor:
-        build: . 
-        ports:
-        - "8888:8080"
-        volumes:
-        - ./src:/var/www/html
-        - .docker/supervisord.conf:/etc/supervisor/supervisord.conf
-        networks:
-          - laravel
+ 
 networks:
     laravel:
         driver: bridge

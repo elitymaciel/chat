@@ -1,0 +1,9 @@
+{
+    "apps": [ 
+      {
+        "name": "laravel-reverb",
+        "script": "php",
+        "args": "artisan reverb:start"
+      }
+    ]
+  }
